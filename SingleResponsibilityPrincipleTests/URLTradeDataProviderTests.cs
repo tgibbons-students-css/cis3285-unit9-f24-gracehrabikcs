@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SingleResponsibilityPrinciple.Contracts;
 using SingleResponsibilityPrinciple;
+using System.Diagnostics;
 
 namespace SingleResponsibilityPrinciple.Tests
 {
@@ -29,7 +30,9 @@ namespace SingleResponsibilityPrinciple.Tests
             ITradeDataProvider tradeProvider = new URLTradeDataProvider(tradeURL, logger);
 
             //Act
+            //var trades = tradeProvider.GetTradeData();
             IEnumerable<string> trades = tradeProvider.GetTradeData();
+
 
             //Assert
 
