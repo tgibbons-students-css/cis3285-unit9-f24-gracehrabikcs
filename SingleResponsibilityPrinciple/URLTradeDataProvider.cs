@@ -21,16 +21,45 @@ namespace SingleResponsibilityPrinciple
             //throw new NotImplementedException();
             var tradeData = new List<string>();
             logger.LogInfo("Reading trade file from URL: " + url);
-            var client = new WebClient();
-            using (var stream = client.OpenRead(url))
-            using (var reader = new StreamReader(stream))
+
+            using (HttpClient client = new HttpClient())
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                if (!response.IsSuccessStatusCode)
                 {
-                    tradeData.Add(line);
+                    // log error and throw an exception if the URL fails
+                    logger.LogInfo("Failed to retrieve trades from URL: " + url);
+                    throw new HttpRequestException("Unable to retrieve data from the specified URL.");
+
+                }
+                // set up a Stream and StreamReader to access the data
+                using (Stream stream = response.Content.ReadAsStreamAsync().Result)
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    // Read each line of the text file using reader.ReadLine()
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        tradeData.Add(line);
+                    }
+       
+
+                        // Read until the reader returns a null line
+                        // Add each line to the tradeData list
                 }
             }
+
+            //var client = new WebClient();
+            //using (var stream = client.OpenRead(url))
+            //using (var reader = new StreamReader(stream))
+            //{
+            //string line;
+            //while ((line = reader.ReadLine()) != null)
+            //{
+            //tradeData.Add(line);
+            //}
+            //}
+
             return tradeData;
         }
 

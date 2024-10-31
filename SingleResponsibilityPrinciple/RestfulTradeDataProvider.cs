@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace SingleResponsibilityPrinciple
 {
@@ -27,7 +28,8 @@ namespace SingleResponsibilityPrinciple
             //HttpResponseMessage response = task.Result;
             if (response.IsSuccessStatusCode)
             {
-                tradesString = await response.Content.ReadAsAsync<List<string>>();
+                //tradesString = await response.Content.ReadAsAsync<List<string>>();
+                tradesString = await response.Content.ReadFromJsonAsync<List<string>>();
                 logger.LogInfo("Received trade strings of length = " + tradesString.Count);
 
             }
