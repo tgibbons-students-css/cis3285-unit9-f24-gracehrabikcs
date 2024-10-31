@@ -33,6 +33,13 @@ namespace SingleResponsibilityPrinciple
                 return false;
             }
 
+            // New validation for trade amount range
+            if (tradeAmount < 1000 || tradeAmount > 100000)
+            {
+                logger.LogWarning("Trade amount out of range: '{0}'", tradeAmount);
+                return false;
+            }
+
             decimal tradePrice;
             if (!decimal.TryParse(tradeData[2], out tradePrice))
             {
