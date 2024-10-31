@@ -136,5 +136,23 @@ namespace SingleResponsibilityPrinciple.Tests
             //Assert
             Assert.IsFalse(result);
         }
+
+        //  add a new unit tests to check for the correct behavior when the validator is given an empty string
+        //  or "" for the first string in the strData list.
+        // gh 10/31/2024 at 11:08 am
+        [TestMethod()]
+        public void TestEmptyCurrencyString()
+        {
+            // Arrange
+            var logger = new ConsoleLogger();
+            var tradeValidator = new SimpleTradeValidator(logger);
+            string[] strData = { "", "4444", "1.00" }; // First element is an empty string
+
+            // Act
+            bool result = tradeValidator.Validate(strData);
+
+            // Assert
+            Assert.IsFalse(result); // Expecting validation to fail
+        }
     }
 }
