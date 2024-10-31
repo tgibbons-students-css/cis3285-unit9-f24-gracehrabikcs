@@ -34,6 +34,7 @@ namespace SingleResponsibilityPrinciple
             }
 
             // New validation for trade amount range
+            // for request 403
             if (tradeAmount < 1000 || tradeAmount > 100000)
             {
                 logger.LogWarning("Trade amount out of range: '{0}'", tradeAmount);
